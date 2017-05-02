@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="dbo.USERS", catalog="NONCOMP")
 public class Users {
 	@Id
-	@Column(name="USERNAME")
+	@Column(name="USER_NAME")
 	private String userName;
 	@Column(name="PASSWORD")
 	private String password;

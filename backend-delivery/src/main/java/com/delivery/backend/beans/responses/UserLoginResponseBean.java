@@ -14,6 +14,7 @@ public class UserLoginResponseBean {
 	private boolean cod;
 	private String employeeCode;
 	private boolean statusFlag;
+	private String userAuthToken;
 	
 	public String getUsername() {
 		return username;
@@ -68,5 +69,11 @@ public class UserLoginResponseBean {
 	}
 	public void setStatusFlag(boolean statusFlag) {
 		this.statusFlag = statusFlag;
+	}
+	public String getUserAuthToken() {
+		return userAuthToken;
+	}
+	public void setUserAuthToken(String userAuthToken) {
+		this.userAuthToken = userAuthToken;
 	}
 }

@@ -1,5 +1,7 @@
 package com.delivery.backend.services;
 
+import java.util.Base64;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -38,6 +40,10 @@ public class UserService {
 				responseBean.setSetting(user.isSetting());
 				responseBean.setStatusFlag(user.isStatusFlag());
 				responseBean.setUsername(user.getUserName());
+				String tempToken = requestBean.getUsername()+":"+requestBean.getPassword();
+				String userAuthToken = Base64.getEncoder().encodeToString(tempToken.getBytes());
+				System.out.println("auth token : " + userAuthToken);
+				responseBean.setUserAuthToken(userAuthToken);
 			}
 			transaction.commit();
 		}

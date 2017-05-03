@@ -11,5 +11,13 @@
         <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <mapping class="com.delivery.backend.daos.Users"/>
+        <mapping class="com.delivery.backend.daos.DeliveryPrint"/>
+        <mapping class="com.delivery.backend.daos.DeliveryStatus"/>
+        <mapping class="com.delivery.backend.daos.Employee"/>
+        <mapping class="com.delivery.backend.daos.LiveStatus"/>
+        <mapping class="com.delivery.backend.daos.MST_ID"/>
+        <mapping class="com.delivery.backend.daos.MstStatus"/>
+        <mapping class="com.delivery.backend.daos.Relation"/>
+        <mapping class="com.delivery.backend.daos.UnDeliveryStatus"/>
     </session-factory>
 </hibernate-configuration>

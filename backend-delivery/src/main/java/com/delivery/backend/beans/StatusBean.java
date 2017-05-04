@@ -1,28 +1,16 @@
-package com.delivery.backend.daos;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package com.delivery.backend.beans;
 
 /**
  * @author Ram K Bharathi
- * @created May 3, 2017
+ * @created May 4, 2017
  */
-@Entity
-@Table(name="dbo.MST_STATUS", catalog="NONCOMP")
-public class MstStatus {
-	@Id
-	@Column(name="STATUS_CODE")
+public class StatusBean {
 	private String statusCode;
-	@Column(name="STATUS_DESC")
 	private String statusDesc;
-	@Column(name="STATUS_FLAG", nullable=false, columnDefinition="BIT")
 	private boolean statusFlag;
-	@Column(name="REMARKS")
 	private String remarks;
-	@Column(name="NOINFO_FLAG", nullable=false, columnDefinition="BIT")
 	private boolean noInfoFlag;
+	
 	public String getStatusCode() {
 		return statusCode;
 	}

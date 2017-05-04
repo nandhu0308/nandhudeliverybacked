@@ -1,5 +1,7 @@
 package com.delivery.backend.daos;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ public class DeliveryPrint {
 	@Column(name="EMPLOYEE_CODE")
 	private String employeeCode;
 	@Column(name="DRS_DATE_TIME")
-	private String drsDateTime;
+	private Date drsDateTime;
 	@Column(name="DRS_CLOSE", nullable=false, columnDefinition="BIT")
 	private boolean drsClose;
 	@Column(name="START_KM")
@@ -48,10 +50,10 @@ public class DeliveryPrint {
 	public void setEmployeeCode(String employeeCode) {
 		this.employeeCode = employeeCode;
 	}
-	public String getDrsDateTime() {
+	public Date getDrsDateTime() {
 		return drsDateTime;
 	}
-	public void setDrsDateTime(String drsDateTime) {
+	public void setDrsDateTime(Date drsDateTime) {
 		this.drsDateTime = drsDateTime;
 	}
 	public boolean isDrsClose() {

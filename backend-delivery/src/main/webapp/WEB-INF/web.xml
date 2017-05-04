@@ -13,4 +13,12 @@
   	<servlet-name>delivery</servlet-name>
   	<url-pattern>/delivery/*</url-pattern>
   </servlet-mapping>
+  <filter>
+  	<filter-name>RestAuthFilter</filter-name>
+  	<filter-class>com.delivery.backend.security.RestFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>RestAuthFilter</filter-name>
+  	<url-pattern>/delivery/*</url-pattern>
+  </filter-mapping>
 </web-app>

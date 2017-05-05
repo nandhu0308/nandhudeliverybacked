@@ -84,23 +84,25 @@ public class OpsService {
 			session = sessionFactory.getCurrentSession();
 			transaction = session.beginTransaction();
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
 			Date date = new Date();
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
 			String startDateString = sdf.format(calendar.getTime())+" 00:00:00";
+			System.out.println("starting date : " + startDateString);
 			String endDateString = sdf.format(calendar.getTime())+" 23:59:59";
-			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			System.out.println("ending date : " + endDateString);
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
 			Date startDate = sdf2.parse(startDateString);
 			Date endDate = sdf2.parse(endDateString);
 			List<String> awbNoList = new ArrayList<String>();
 			Criteria criteria = session.createCriteria(DeliveryPrint.class);
-			criteria.add(Restrictions.eq("employeeCode", employeeCode));
-			/*Junction condition = Restrictions.conjunction()
+			//criteria.add(Restrictions.eq("employeeCode", employeeCode));
+			Junction condition = Restrictions.conjunction()
 					.add(Restrictions.eq("employeeCode", employeeCode))
 					.add(Restrictions.gt("drsDateTime", startDate))
 					.add(Restrictions.lt("drsDateTime", endDate));
-			criteria.add(condition);*/
+			criteria.add(condition);
 			List<DeliveryPrint> printList = criteria.list();
 			System.out.println("print size : " + printList.size());
 			if(printList.size()>0){
@@ -112,7 +114,7 @@ public class OpsService {
 					if(liveList.size()>0){
 						for(LiveStatus live : liveList){
 							Criteria criteria3 = session.createCriteria(DeliveryStatus.class);
-							criteria3.add(Restrictions.eq("AWBNO", live.getAwbNo()));
+							criteria3.add(Restrictions.eq("awbNo", live.getAwbNo()));
 							List<DeliveryStatus> statusList = criteria3.list();
 							System.out.println("delivery status list size : " + statusList.size());
 							if(statusList.isEmpty()){

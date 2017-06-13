@@ -12,9 +12,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="dbo.UN_DELIVERY_STATUS", catalog="NONCOMP")
 public class UnDeliveryStatus {
-	@Id
 	@Column(name="LIVE_ID")
 	private String LIVE_ID;
+	@Id
 	@Column(name="AWBNO")
 	private String awbNo;
 	@Column(name="ORG_SVC")

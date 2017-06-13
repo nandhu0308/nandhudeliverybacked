@@ -31,6 +31,8 @@ public class UserService {
 		Session session = null;
 		Transaction transaction = null;
 		try{
+			System.out.println("username = " + requestBean.getUsername());
+			System.out.println("password = " + requestBean.getPassword());
 			session = sessionFactory.getCurrentSession();
 			transaction = session.beginTransaction();
 			

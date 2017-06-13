@@ -26,6 +26,7 @@ public class UserController {
 	@RequestMapping(value="/login", method=RequestMethod.POST, headers="Accept=application/json")
 	public ResponseEntity<?> userLogin(@RequestBody UserLoginRequestBean requestBean){
 		UserService service = new UserService();
+		System.out.println("req : " + requestBean.getUsername());
 		UserLoginResponseBean responseBean = service.userLogin(requestBean);
 		if(responseBean!=null){
 			return new ResponseEntity<UserLoginResponseBean>(responseBean, HttpStatus.OK);

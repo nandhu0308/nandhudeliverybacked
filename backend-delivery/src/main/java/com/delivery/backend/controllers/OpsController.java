@@ -57,9 +57,9 @@ public class OpsController {
 	@RequestMapping(value="/delivery/awbno/{awbNo}", method=RequestMethod.GET, headers="Accept=application/json")
 	public ResponseEntity<?> getAwbNoLiveStatus(@PathVariable("awbNo") String awbNo){
 		OpsService service = new OpsService();
-		List<LiveStatusBean> statusBeanList = service.getAwbNoLiveStatus(awbNo);
-		if(!statusBeanList.isEmpty()){
-			return new ResponseEntity<List<LiveStatusBean>>(statusBeanList, HttpStatus.OK);
+		LiveStatusBean statusBean = service.getAwbNoLiveStatus(awbNo);
+		if(statusBean!=null){
+			return new ResponseEntity<LiveStatusBean>(statusBean, HttpStatus.OK);
 		}
 		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 	}

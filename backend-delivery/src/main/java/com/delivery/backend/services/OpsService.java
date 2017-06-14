@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.delivery.backend.beans.AWBNOListBean;
@@ -142,8 +143,8 @@ public class OpsService {
 		return listBean;
 	}
 	
-	public List<LiveStatusBean> getAwbNoLiveStatus(String awbNo){
-		List<LiveStatusBean> statusBeanList = null;
+	public LiveStatusBean getAwbNoLiveStatus(String awbNo){
+		LiveStatusBean statusBean = null;
 		Session session = null;
 		Transaction transaction = null;
 		try{
@@ -152,27 +153,22 @@ public class OpsService {
 			
 			Criteria criteria = session.createCriteria(LiveStatus.class);
 			criteria.add(Restrictions.eq("awbNo", awbNo));
+			criteria.addOrder(Order.desc("scanDtTime"));
 			List<LiveStatus> statusList = criteria.list();
 			System.out.println("status list size: "+statusList.size());
 			if(statusList.size()>0){
-				statusBeanList = new ArrayList<LiveStatusBean>();
-				for(LiveStatus status : statusList){
-					LiveStatus instance = (LiveStatus) session
-							.get("com.delivery.backend.daos.LiveStatus", status.getLiveId());
-					LiveStatusBean statusBean = new LiveStatusBean();
-					statusBean.setLiveId(instance.getLiveId());
-					statusBean.setAwbNo(instance.getAwbNo());
-					statusBean.setCityCode(instance.getCityCode());
-					statusBean.setDeliveryPrintNo(instance.getDeliveryPrintNo());
-					statusBean.setEempCode(instance.getEempCode());
-					statusBean.setEmpCode(instance.getEmpCode());
-					statusBean.setPrintOrder(instance.getPrintOrder());
-					statusBean.setScanDtTime(instance.getScanDtTime());
-					statusBean.setStatusCode(instance.getStatusCode());
-					statusBean.setSvcCode(instance.getSvcCode());
-					statusBeanList.add(statusBean);
-					statusBean = null;
-				}
+				LiveStatus instance = statusList.get(0);
+				statusBean = new LiveStatusBean();
+				statusBean.setLiveId(instance.getLiveId());
+				statusBean.setAwbNo(instance.getAwbNo());
+				statusBean.setCityCode(instance.getCityCode());
+				statusBean.setDeliveryPrintNo(instance.getDeliveryPrintNo());
+				statusBean.setEempCode(instance.getEempCode());
+				statusBean.setEmpCode(instance.getEmpCode());
+				statusBean.setPrintOrder(instance.getPrintOrder());
+				statusBean.setScanDtTime(instance.getScanDtTime().toString());
+				statusBean.setStatusCode(instance.getStatusCode());
+				statusBean.setSvcCode(instance.getSvcCode());
 			}
 			transaction.commit();
 		} catch(RuntimeException re){
@@ -187,7 +183,7 @@ public class OpsService {
 				session.close();
 			}
 		}
-		return statusBeanList;
+		return statusBean;
 	}
 
 	public DeliveryStatusUpdateResponseBean updateDeiveryStatus(DeliveryStatusUpdateRequestBean requestBean) {

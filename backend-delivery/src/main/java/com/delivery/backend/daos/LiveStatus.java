@@ -1,5 +1,7 @@
 package com.delivery.backend.daos;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,7 +24,7 @@ public class LiveStatus {
 	@Column(name="SVC_CODE")
 	private String svcCode;
 	@Column(name="SCAN_DT_TIME")
-	private String scanDtTime;
+	private Date scanDtTime;
 	@Column(name="STATUS_CODE")
 	private String statusCode;
 	@Column(name="EMP_CODE")
@@ -64,10 +66,10 @@ public class LiveStatus {
 	public void setSvcCode(String svcCode) {
 		this.svcCode = svcCode;
 	}
-	public String getScanDtTime() {
+	public Date getScanDtTime() {
 		return scanDtTime;
 	}
-	public void setScanDtTime(String scanDtTime) {
+	public void setScanDtTime(Date scanDtTime) {
 		this.scanDtTime = scanDtTime;
 	}
 	public String getStatusCode() {

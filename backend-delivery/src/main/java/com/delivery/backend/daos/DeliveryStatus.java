@@ -57,6 +57,10 @@ public class DeliveryStatus {
 	private String latitude;
 	@Column(name="LONGITUDE")
 	private String longitude;
+	@Column(name="SIGNATURE_IMG")
+	private String signatureImg;
+	@Column(name="SCAN_IMG")
+	private String scanImg;
 	
 	public String getAwbNo() {
 		return awbNo;
@@ -189,5 +193,17 @@ public class DeliveryStatus {
 	}
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+	public String getSignatureImg() {
+		return signatureImg;
+	}
+	public void setSignatureImg(String signatureImg) {
+		this.signatureImg = signatureImg;
+	}
+	public String getScanImg() {
+		return scanImg;
+	}
+	public void setScanImg(String scanImg) {
+		this.scanImg = scanImg;
 	}
 }

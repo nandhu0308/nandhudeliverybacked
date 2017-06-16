@@ -5,8 +5,8 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="hibernate.connection.password">ramk</property>
-        <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;DatabaseName=firstdb;SelectMethod=cursor;user=sa;password=ramk;</property>
+        <property name="hibernate.connection.password">limit</property>
+        <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;DatabaseName=NONCOMP;SelectMethod=cursor;user=sa;password=limit;</property>
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
         <property name="hibernate.current_session_context_class">thread</property>

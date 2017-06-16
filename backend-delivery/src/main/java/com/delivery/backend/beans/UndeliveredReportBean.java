@@ -1,7 +1,5 @@
 package com.delivery.backend.beans;
 
-import java.util.Date;
-
 /**
  * @author Ram K Bharathi
  * @created Jun 16, 2017
@@ -10,7 +8,7 @@ public class UndeliveredReportBean {
 	private String liveId;
 	private String awbNo;
 	private String statusCode;
-	private Date statusDate;
+	private String statusDate;
 	private String statusTime;
 	
 	public String getLiveId() {
@@ -31,10 +29,10 @@ public class UndeliveredReportBean {
 	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
 	}
-	public Date getStatusDate() {
+	public String getStatusDate() {
 		return statusDate;
 	}
-	public void setStatusDate(Date statusDate) {
+	public void setStatusDate(String statusDate) {
 		this.statusDate = statusDate;
 	}
 	public String getStatusTime() {

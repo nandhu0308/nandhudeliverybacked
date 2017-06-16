@@ -249,20 +249,28 @@ public class OpsService {
 		return responseBean;
 	}
 	
-	public List<DeliveredReportBean> getDeliveredReport(String empNo){
-		List<DeliveredReportBean> reportList = null;
+	public List<DeliveredReportBean> getDeliveredReport(String empNo, String fromDate, String toDate) throws Exception{
+		List<DeliveredReportBean> reportList = new ArrayList<DeliveredReportBean>();
 		Session session = null;
 		Transaction transaction = null;
 		try{
 			session = sessionFactory.getCurrentSession();
 			transaction = session.beginTransaction();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date dateForm = sdf.parse(fromDate);
+			Date dateTo = sdf.parse(toDate);
+			
 			Criteria criteria = session.createCriteria(DeliveryStatus.class);
-			criteria.add(Restrictions.eq("deliveryEmpCode", empNo));
+			Junction condition = Restrictions.conjunction()
+					.add(Restrictions.ge("statusDate", dateForm))
+					.add(Restrictions.le("statusDate", dateTo))
+					.add(Restrictions.eq("deliveryEmpCode", empNo));
+			criteria.add(condition);
 			criteria.addOrder(Order.desc("statusDate"));
 			List<DeliveryStatus> statusList = criteria.list();
 			System.out.println("status list size: " + statusList.size());
 			if(statusList.size()>0){
-				reportList = new ArrayList<DeliveredReportBean>();
 				for(DeliveryStatus status: statusList){
 					DeliveredReportBean reportBean = new DeliveredReportBean();
 					reportBean.setAwbNo(status.getAwbNo());
@@ -270,7 +278,7 @@ public class OpsService {
 					reportBean.setPhoneNo(status.getPhoneNo());
 					reportBean.setRevdBy(status.getRevdBy());
 					reportBean.setStatusCode(status.getStatusCode());
-					reportBean.setStatusDate(status.getStatusDate());
+					reportBean.setStatusDate(status.getStatusDate().toString());
 					reportBean.setStatusTime(status.getStatusTime());
 					reportList.add(reportBean);
 					reportBean = null;
@@ -292,7 +300,7 @@ public class OpsService {
 	}
 	
 	public List<UndeliveredReportBean> getUndeliveredReport(String empNo){
-		List<UndeliveredReportBean> reportList = null;
+		List<UndeliveredReportBean> reportList = new ArrayList<UndeliveredReportBean>();
 		Session session = null;
 		Transaction transaction = null;
 		try{
@@ -305,13 +313,12 @@ public class OpsService {
 			List<UnDeliveryStatus> statusList = criteria.list();
 			System.out.println("status list size: "+statusList.size());
 			if(statusList.size()>0){
-				reportList = new ArrayList<UndeliveredReportBean>();
 				for(UnDeliveryStatus status: statusList){
 					UndeliveredReportBean reportBean = new UndeliveredReportBean();
 					reportBean.setAwbNo(status.getAwbNo());
 					reportBean.setLiveId(status.getLIVE_ID());
 					reportBean.setStatusCode(status.getStatusCode());
-					reportBean.setStatusDate(status.getStatusDate());
+					reportBean.setStatusDate(status.getStatusDate().toString());
 					reportBean.setStatusTime(status.getStatusTime());
 					reportList.add(reportBean);
 					reportBean = null;

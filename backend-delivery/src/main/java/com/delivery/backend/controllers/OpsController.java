@@ -17,6 +17,7 @@ import com.delivery.backend.beans.StatusBean;
 import com.delivery.backend.beans.UndeliveredReportBean;
 import com.delivery.backend.beans.requests.DeliveryStatusUpdateRequestBean;
 import com.delivery.backend.beans.responses.DeliveryStatusUpdateResponseBean;
+import com.delivery.backend.beans.responses.errors.UserLoginErrorResponseBean;
 import com.delivery.backend.services.OpsService;
 
 /**
@@ -53,7 +54,9 @@ public class OpsController {
 		if(responseBean!=null){
 			return new ResponseEntity<DeliveryStatusUpdateResponseBean>(responseBean, HttpStatus.OK);
 		}
-		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		UserLoginErrorResponseBean errorResponseBean = new UserLoginErrorResponseBean();
+		errorResponseBean.setMessage("Failed");
+		return new ResponseEntity<UserLoginErrorResponseBean>(errorResponseBean, HttpStatus.NOT_FOUND);
 	}
 	
 	@RequestMapping(value="/delivery/awbno/{awbNo}", method=RequestMethod.GET, headers="Accept=application/json")
@@ -63,17 +66,23 @@ public class OpsController {
 		if(statusBean!=null){
 			return new ResponseEntity<LiveStatusBean>(statusBean, HttpStatus.OK);
 		}
-		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		UserLoginErrorResponseBean errorResponseBean = new UserLoginErrorResponseBean();
+		errorResponseBean.setMessage("Not Found");
+		return new ResponseEntity<UserLoginErrorResponseBean>(errorResponseBean, HttpStatus.NOT_FOUND);
 	}
 	
-	@RequestMapping(value="/report/delivered/{empNo}", method=RequestMethod.GET, headers="Accept=application/json")
-	public ResponseEntity<?> getDeliveredReport(@PathVariable("empNo") String empNo){
+	@RequestMapping(value="/report/delivered/{empNo}/{fromDate}/{toDate}", method=RequestMethod.GET, headers="Accept=application/json")
+	public ResponseEntity<?> getDeliveredReport(@PathVariable("empNo") String empNo,
+			@PathVariable("fromDate") String fromDate,
+			@PathVariable("toDate") String toDate) throws Exception{
 		OpsService service = new OpsService();
-		List<DeliveredReportBean> reportList = service.getDeliveredReport(empNo);
+		List<DeliveredReportBean> reportList = service.getDeliveredReport(empNo, fromDate, toDate);
 		if(!reportList.isEmpty()){
 			return new ResponseEntity<List<DeliveredReportBean>>(reportList, HttpStatus.OK);
 		}
-		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		UserLoginErrorResponseBean errorResponseBean = new UserLoginErrorResponseBean();
+		errorResponseBean.setMessage("Not Found");
+		return new ResponseEntity<UserLoginErrorResponseBean>(errorResponseBean, HttpStatus.NOT_FOUND);
 	}
 	
 	@RequestMapping(value="/report/undelivered/{empNo}", method=RequestMethod.GET, headers="Accept=application/json")
@@ -83,7 +92,9 @@ public class OpsController {
 		if(!reportList.isEmpty()){
 			return new ResponseEntity<List<UndeliveredReportBean>>(reportList, HttpStatus.OK);
 		}
-		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		UserLoginErrorResponseBean errorResponseBean = new UserLoginErrorResponseBean();
+		errorResponseBean.setMessage("Not Found");
+		return new ResponseEntity<UserLoginErrorResponseBean>(errorResponseBean, HttpStatus.NOT_FOUND);
 	}
 	
 }

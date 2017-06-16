@@ -1,5 +1,7 @@
 package com.delivery.backend.daos;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,7 +28,7 @@ public class DeliveryStatus {
 	@Column(name="DELIVERY_EMPCODE")
 	private String deliveryEmpCode;
 	@Column(name="STATUS_DATE")
-	private String statusDate;
+	private Date statusDate;
 	@Column(name="STATUS_TIME")
 	private String statusTime;
 	@Column(name="REVD_BY")
@@ -98,10 +100,10 @@ public class DeliveryStatus {
 	public void setDeliveryEmpCode(String deliveryEmpCode) {
 		this.deliveryEmpCode = deliveryEmpCode;
 	}
-	public String getStatusDate() {
+	public Date getStatusDate() {
 		return statusDate;
 	}
-	public void setStatusDate(String statusDate) {
+	public void setStatusDate(Date statusDate) {
 		this.statusDate = statusDate;
 	}
 	public String getStatusTime() {

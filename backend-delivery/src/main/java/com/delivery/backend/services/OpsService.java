@@ -16,10 +16,13 @@ import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.jboss.logging.NDC;
 
 import com.delivery.backend.beans.AWBNOListBean;
+import com.delivery.backend.beans.DeliveredReportBean;
 import com.delivery.backend.beans.LiveStatusBean;
 import com.delivery.backend.beans.StatusBean;
+import com.delivery.backend.beans.UndeliveredReportBean;
 import com.delivery.backend.beans.requests.DeliveryStatusUpdateRequestBean;
 import com.delivery.backend.beans.responses.DeliveryStatusUpdateResponseBean;
 import com.delivery.backend.daos.DeliveryPrint;
@@ -244,6 +247,89 @@ public class OpsService {
 			}
 		}
 		return responseBean;
+	}
+	
+	public List<DeliveredReportBean> getDeliveredReport(String empNo){
+		List<DeliveredReportBean> reportList = null;
+		Session session = null;
+		Transaction transaction = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			transaction = session.beginTransaction();
+			Criteria criteria = session.createCriteria(DeliveryStatus.class);
+			criteria.add(Restrictions.eq("deliveryEmpCode", empNo));
+			criteria.addOrder(Order.desc("statusDate"));
+			List<DeliveryStatus> statusList = criteria.list();
+			System.out.println("status list size: " + statusList.size());
+			if(statusList.size()>0){
+				reportList = new ArrayList<DeliveredReportBean>();
+				for(DeliveryStatus status: statusList){
+					DeliveredReportBean reportBean = new DeliveredReportBean();
+					reportBean.setAwbNo(status.getAwbNo());
+					reportBean.setDeliveryEmpCode(status.getDeliveryEmpCode());
+					reportBean.setPhoneNo(status.getPhoneNo());
+					reportBean.setRevdBy(status.getRevdBy());
+					reportBean.setStatusCode(status.getStatusCode());
+					reportBean.setStatusDate(status.getStatusDate());
+					reportBean.setStatusTime(status.getStatusTime());
+					reportList.add(reportBean);
+					reportBean = null;
+				}
+			}
+		} catch (RuntimeException re) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			System.err.println("updating status failed : " + re);
+			re.printStackTrace();
+			throw re;
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
+		return reportList;
+	}
+	
+	public List<UndeliveredReportBean> getUndeliveredReport(String empNo){
+		List<UndeliveredReportBean> reportList = null;
+		Session session = null;
+		Transaction transaction = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			transaction = session.beginTransaction();
+			
+			Criteria criteria = session.createCriteria(UnDeliveryStatus.class);
+			criteria.add(Restrictions.eq("deliveryEmpCode", empNo));
+			criteria.addOrder(Order.desc("statusDate"));
+			List<UnDeliveryStatus> statusList = criteria.list();
+			System.out.println("status list size: "+statusList.size());
+			if(statusList.size()>0){
+				reportList = new ArrayList<UndeliveredReportBean>();
+				for(UnDeliveryStatus status: statusList){
+					UndeliveredReportBean reportBean = new UndeliveredReportBean();
+					reportBean.setAwbNo(status.getAwbNo());
+					reportBean.setLiveId(status.getLIVE_ID());
+					reportBean.setStatusCode(status.getStatusCode());
+					reportBean.setStatusDate(status.getStatusDate());
+					reportBean.setStatusTime(status.getStatusTime());
+					reportList.add(reportBean);
+					reportBean = null;
+				}
+			}
+		} catch (RuntimeException re) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			System.err.println("updating status failed : " + re);
+			re.printStackTrace();
+			throw re;
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
+		return reportList;
 	}
 
 }

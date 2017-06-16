@@ -1,5 +1,7 @@
 package com.delivery.backend.beans.requests;
 
+import java.util.Date;
+
 /**
  * @author Ram K Bharathi
  * @created Jun 13, 2017
@@ -12,7 +14,7 @@ public class DeliveryStatusUpdateRequestBean {
 	private String dstSvc;
 	private String statusCode;
 	private String deliveryEmpCode;
-	private String statusDate;
+	private Date statusDate;
 	private String statusTime;
 	private String revdBy;
 	private String phoneNo;
@@ -49,10 +51,10 @@ public class DeliveryStatusUpdateRequestBean {
 	public void setDeliveryEmpCode(String deliveryEmpCode) {
 		this.deliveryEmpCode = deliveryEmpCode;
 	}
-	public String getStatusDate() {
+	public Date getStatusDate() {
 		return statusDate;
 	}
-	public void setStatusDate(String statusDate) {
+	public void setStatusDate(Date statusDate) {
 		this.statusDate = statusDate;
 	}
 	public String getStatusTime() {

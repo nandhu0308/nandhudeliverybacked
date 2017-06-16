@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.delivery.backend.beans.AWBNOListBean;
+import com.delivery.backend.beans.DeliveredReportBean;
 import com.delivery.backend.beans.LiveStatusBean;
 import com.delivery.backend.beans.StatusBean;
+import com.delivery.backend.beans.UndeliveredReportBean;
 import com.delivery.backend.beans.requests.DeliveryStatusUpdateRequestBean;
 import com.delivery.backend.beans.responses.DeliveryStatusUpdateResponseBean;
 import com.delivery.backend.services.OpsService;
@@ -60,6 +62,26 @@ public class OpsController {
 		LiveStatusBean statusBean = service.getAwbNoLiveStatus(awbNo);
 		if(statusBean!=null){
 			return new ResponseEntity<LiveStatusBean>(statusBean, HttpStatus.OK);
+		}
+		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(value="/report/delivered/{empNo}", method=RequestMethod.GET, headers="Accept=application/json")
+	public ResponseEntity<?> getDeliveredReport(@PathVariable("empNo") String empNo){
+		OpsService service = new OpsService();
+		List<DeliveredReportBean> reportList = service.getDeliveredReport(empNo);
+		if(!reportList.isEmpty()){
+			return new ResponseEntity<List<DeliveredReportBean>>(reportList, HttpStatus.OK);
+		}
+		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(value="/report/undelivered/{empNo}", method=RequestMethod.GET, headers="Accept=application/json")
+	public ResponseEntity<?> getUndeliveredReport(@PathVariable("empNo") String empNo){
+		OpsService service = new OpsService();
+		List<UndeliveredReportBean> reportList = service.getUndeliveredReport(empNo);
+		if(!reportList.isEmpty()){
+			return new ResponseEntity<List<UndeliveredReportBean>>(reportList, HttpStatus.OK);
 		}
 		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 	}

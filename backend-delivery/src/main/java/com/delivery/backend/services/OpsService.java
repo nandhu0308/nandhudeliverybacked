@@ -168,6 +168,8 @@ public class OpsService {
 				statusBean.setDeliveryPrintNo(instance.getDeliveryPrintNo());
 				statusBean.setEempCode(instance.getEempCode());
 				statusBean.setEmpCode(instance.getEmpCode());
+				statusBean.setEdpFlag(instance.isEdpFlag());
+				statusBean.setImportFlag(instance.getImportFlag());
 				statusBean.setPrintOrder(instance.getPrintOrder());
 				statusBean.setScanDtTime(instance.getScanDtTime().toString());
 				statusBean.setStatusCode(instance.getStatusCode());
@@ -215,6 +217,9 @@ public class OpsService {
 				status.setLongitude(requestBean.getLongitude());
 				status.setSignatureImg(requestBean.getSignatureImg());
 				status.setScanImg(requestBean.getScanImg());
+				status.setEdpFlag(requestBean.isEdpFlag());
+				status.setImportFlag(requestBean.getImportFlag());
+				status.setDentryEmpCode(requestBean.getEempCode());
 				session.persist(status);
 				responseBean = new DeliveryStatusUpdateResponseBean();
 				responseBean.setMessage("Success");
@@ -229,6 +234,11 @@ public class OpsService {
 				status.setStatusDate(requestBean.getStatusDate());
 				status.setStatusTime(requestBean.getStatusTime());
 				status.setRemarks(requestBean.getRemarks());
+				status.setEdpFlag(requestBean.isEdpFlag());
+				status.setImportFlag(requestBean.getImportFlag());
+				status.setRevdBy(requestBean.getRevdBy());
+				status.setPhoneNo(requestBean.getPhoneNo());
+				status.setDentryEmpCode(requestBean.getEempCode());
 				session.persist(status);
 				responseBean = new DeliveryStatusUpdateResponseBean();
 				responseBean.setMessage("Success");

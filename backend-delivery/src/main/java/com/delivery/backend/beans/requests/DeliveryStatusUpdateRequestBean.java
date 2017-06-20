@@ -26,6 +26,9 @@ public class DeliveryStatusUpdateRequestBean {
 	private String longitude;
 	private String signatureImg;
 	private String scanImg;
+	private boolean edpFlag;
+	private int importFlag;
+	private String eempCode;
 	
 	public boolean isDelivered() {
 		return delivered;
@@ -140,5 +143,23 @@ public class DeliveryStatusUpdateRequestBean {
 	}
 	public void setDstSvc(String dstSvc) {
 		this.dstSvc = dstSvc;
+	}
+	public boolean isEdpFlag() {
+		return edpFlag;
+	}
+	public void setEdpFlag(boolean edpFlag) {
+		this.edpFlag = edpFlag;
+	}
+	public int getImportFlag() {
+		return importFlag;
+	}
+	public void setImportFlag(int importFlag) {
+		this.importFlag = importFlag;
+	}
+	public String getEempCode() {
+		return eempCode;
+	}
+	public void setEempCode(String eempCode) {
+		this.eempCode = eempCode;
 	}
 }

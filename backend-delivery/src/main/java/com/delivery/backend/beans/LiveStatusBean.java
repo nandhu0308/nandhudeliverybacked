@@ -13,6 +13,8 @@ public class LiveStatusBean {
 	private String statusCode;
 	private String empCode;
 	private String eempCode;
+	private boolean edpFlag;
+	private int importFlag;
 	private String deliveryPrintNo;
 	private int printOrder;
 	
@@ -75,5 +77,17 @@ public class LiveStatusBean {
 	}
 	public void setPrintOrder(int printOrder) {
 		this.printOrder = printOrder;
+	}
+	public boolean isEdpFlag() {
+		return edpFlag;
+	}
+	public void setEdpFlag(boolean edpFlag) {
+		this.edpFlag = edpFlag;
+	}
+	public int getImportFlag() {
+		return importFlag;
+	}
+	public void setImportFlag(int importFlag) {
+		this.importFlag = importFlag;
 	}
 }

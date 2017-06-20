@@ -257,9 +257,15 @@ public class OpsService {
 			session = sessionFactory.getCurrentSession();
 			transaction = session.beginTransaction();
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date dateForm = sdf.parse(fromDate);
-			Date dateTo = sdf.parse(toDate);
+			String newFromDate = fromDate+" 00:00:00";
+			String newToDate = toDate+" 23:59:59";
+			
+			SimpleDateFormat sdfFrom = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date dateForm = sdfFrom.parse(newFromDate);
+			System.out.println(dateForm);
+			SimpleDateFormat sdfTo = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date dateTo = sdfTo.parse(newToDate);
+			System.out.println(dateTo);
 			
 			Criteria criteria = session.createCriteria(DeliveryStatus.class);
 			Junction condition = Restrictions.conjunction()

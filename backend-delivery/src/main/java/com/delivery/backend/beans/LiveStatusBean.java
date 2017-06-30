@@ -1,5 +1,7 @@
 package com.delivery.backend.beans;
 
+import com.delivery.backend.daos.Shipment;
+
 /**
  * @author Ram K Bharathi
  * @created Jun 13, 2017
@@ -17,6 +19,7 @@ public class LiveStatusBean {
 	private int importFlag;
 	private String deliveryPrintNo;
 	private int printOrder;
+	private Shipment shipment;
 	
 	public String getLiveId() {
 		return liveId;
@@ -89,5 +92,11 @@ public class LiveStatusBean {
 	}
 	public void setImportFlag(int importFlag) {
 		this.importFlag = importFlag;
+	}
+	public Shipment getShipment() {
+		return shipment;
+	}
+	public void setShipment(Shipment shipment) {
+		this.shipment = shipment;
 	}
 }

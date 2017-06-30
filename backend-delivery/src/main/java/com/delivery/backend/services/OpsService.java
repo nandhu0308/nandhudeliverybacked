@@ -29,6 +29,7 @@ import com.delivery.backend.daos.DeliveryPrint;
 import com.delivery.backend.daos.DeliveryStatus;
 import com.delivery.backend.daos.LiveStatus;
 import com.delivery.backend.daos.MstStatus;
+import com.delivery.backend.daos.Shipment;
 import com.delivery.backend.daos.UnDeliveryStatus;
 import com.delivery.backend.utils.HibernateUtil;
 
@@ -174,6 +175,11 @@ public class OpsService {
 				statusBean.setScanDtTime(instance.getScanDtTime().toString());
 				statusBean.setStatusCode(instance.getStatusCode());
 				statusBean.setSvcCode(instance.getSvcCode());
+				Shipment shipment = (Shipment) session
+						.get("com.delivery.backend.daos.Shipment", awbNo);
+				if(shipment!=null){
+					statusBean.setShipment(shipment);
+				}
 			}
 			transaction.commit();
 		} catch(RuntimeException re){
@@ -224,24 +230,46 @@ public class OpsService {
 				responseBean = new DeliveryStatusUpdateResponseBean();
 				responseBean.setMessage("Success");
 			} else {
-				UnDeliveryStatus status = new UnDeliveryStatus();
-				status.setLIVE_ID(requestBean.getLiveId());
-				status.setAwbNo(requestBean.getAwbNo());
-				status.setOrgSvc(requestBean.getOrgSvc());
-				status.setDstSvc(requestBean.getDstSvc());
-				status.setStatusCode(requestBean.getStatusCode());
-				status.setDeliveryEmpCode(requestBean.getDeliveryEmpCode());
-				status.setStatusDate(requestBean.getStatusDate());
-				status.setStatusTime(requestBean.getStatusTime());
-				status.setRemarks(requestBean.getRemarks());
-				status.setEdpFlag(requestBean.isEdpFlag());
-				status.setImportFlag(requestBean.getImportFlag());
-				status.setRevdBy(requestBean.getRevdBy());
-				status.setPhoneNo(requestBean.getPhoneNo());
-				status.setDentryEmpCode(requestBean.getEempCode());
-				session.persist(status);
-				responseBean = new DeliveryStatusUpdateResponseBean();
-				responseBean.setMessage("Success");
+				UnDeliveryStatus instance = (UnDeliveryStatus) session
+						.get("com.delivery.backend.daos.UnDeliveryStatus", requestBean.getAwbNo());
+				if(instance!=null){
+					instance.setLIVE_ID(requestBean.getLiveId());
+					instance.setAwbNo(requestBean.getAwbNo());
+					instance.setOrgSvc(requestBean.getOrgSvc());
+					instance.setDstSvc(requestBean.getDstSvc());
+					instance.setStatusCode(requestBean.getStatusCode());
+					instance.setDeliveryEmpCode(requestBean.getDeliveryEmpCode());
+					instance.setStatusDate(requestBean.getStatusDate());
+					instance.setStatusTime(requestBean.getStatusTime());
+					instance.setRemarks(requestBean.getRemarks());
+					instance.setEdpFlag(requestBean.isEdpFlag());
+					instance.setImportFlag(requestBean.getImportFlag());
+					instance.setRevdBy(requestBean.getRevdBy());
+					instance.setPhoneNo(requestBean.getPhoneNo());
+					instance.setDentryEmpCode(requestBean.getEempCode());
+					session.update(instance);
+					responseBean = new DeliveryStatusUpdateResponseBean();
+					responseBean.setMessage("Success");
+				} else {
+					UnDeliveryStatus status = new UnDeliveryStatus();
+					status.setLIVE_ID(requestBean.getLiveId());
+					status.setAwbNo(requestBean.getAwbNo());
+					status.setOrgSvc(requestBean.getOrgSvc());
+					status.setDstSvc(requestBean.getDstSvc());
+					status.setStatusCode(requestBean.getStatusCode());
+					status.setDeliveryEmpCode(requestBean.getDeliveryEmpCode());
+					status.setStatusDate(requestBean.getStatusDate());
+					status.setStatusTime(requestBean.getStatusTime());
+					status.setRemarks(requestBean.getRemarks());
+					status.setEdpFlag(requestBean.isEdpFlag());
+					status.setImportFlag(requestBean.getImportFlag());
+					status.setRevdBy(requestBean.getRevdBy());
+					status.setPhoneNo(requestBean.getPhoneNo());
+					status.setDentryEmpCode(requestBean.getEempCode());
+					session.persist(status);
+					responseBean = new DeliveryStatusUpdateResponseBean();
+					responseBean.setMessage("Success");
+				}
 			}
 			transaction.commit();
 		} catch (RuntimeException re) {
@@ -330,14 +358,18 @@ public class OpsService {
 			System.out.println("status list size: "+statusList.size());
 			if(statusList.size()>0){
 				for(UnDeliveryStatus status: statusList){
-					UndeliveredReportBean reportBean = new UndeliveredReportBean();
-					reportBean.setAwbNo(status.getAwbNo());
-					reportBean.setLiveId(status.getLIVE_ID());
-					reportBean.setStatusCode(status.getStatusCode());
-					reportBean.setStatusDate(status.getStatusDate().toString());
-					reportBean.setStatusTime(status.getStatusTime());
-					reportList.add(reportBean);
-					reportBean = null;
+					DeliveryStatus deliveryStatus = (DeliveryStatus) session
+							.get("com.delivery.backend.daos.DeliveryStatus", status.getAwbNo());
+					if(deliveryStatus == null){
+						UndeliveredReportBean reportBean = new UndeliveredReportBean();
+						reportBean.setAwbNo(status.getAwbNo());
+						reportBean.setLiveId(status.getLIVE_ID());
+						reportBean.setStatusCode(status.getStatusCode());
+						reportBean.setStatusDate(status.getStatusDate().toString());
+						reportBean.setStatusTime(status.getStatusTime());
+						reportList.add(reportBean);
+						reportBean = null;
+					}
 				}
 			}
 		} catch (RuntimeException re) {

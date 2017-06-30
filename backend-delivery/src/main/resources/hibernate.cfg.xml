@@ -19,5 +19,6 @@
         <mapping class="com.delivery.backend.daos.MstStatus"/>
         <mapping class="com.delivery.backend.daos.Relation"/>
         <mapping class="com.delivery.backend.daos.UnDeliveryStatus"/>
+        <mapping class="com.delivery.backend.daos.Shipment"/>
     </session-factory>
 </hibernate-configuration>

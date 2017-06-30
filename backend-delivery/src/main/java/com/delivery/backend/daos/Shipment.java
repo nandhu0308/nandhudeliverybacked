@@ -25,6 +25,8 @@ public class Shipment {
 	private String orgSvc;
 	@Column(name="DST_AREA")
 	private String dstArea;
+	@Column(name="DST_SVC")
+	private String dstSvc;
 	@Column(name="PBAG_NO")
 	private String pbagNo;
 	@Column(name="CARGO_MODE")
@@ -471,5 +473,11 @@ public class Shipment {
 	}
 	public void setCommodity(String commodity) {
 		this.commodity = commodity;
+	}
+	public String getDstSvc() {
+		return dstSvc;
+	}
+	public void setDstSvc(String dstSvc) {
+		this.dstSvc = dstSvc;
 	}
 }

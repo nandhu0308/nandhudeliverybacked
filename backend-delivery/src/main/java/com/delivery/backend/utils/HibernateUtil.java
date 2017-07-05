@@ -16,6 +16,7 @@ public class HibernateUtil {
             sessionFactory = cfg.buildSessionFactory();
         } catch (Throwable th) {
             System.err.println("Enitial SessionFactory creation failed" + th);
+            th.printStackTrace();
             throw new ExceptionInInitializerError(th);
         }
     }

@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * @created May 3, 2017
  */
 @Entity
-@Table(name="dbo.MST_RELATION", catalog="NONCOMP")
+@Table(name="mst_relation", catalog="noncomp")
 public class Relation {
 	@Id
 	@GeneratedValue

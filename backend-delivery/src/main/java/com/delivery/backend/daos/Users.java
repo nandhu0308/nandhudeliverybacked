@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * @created May 2, 2017
  */
 @Entity
-@Table(name="dbo.USERS", catalog="NONCOMP")
+@Table(name="users", catalog="noncomp")
 public class Users {
 	@Id
 	@Column(name="USER_NAME")

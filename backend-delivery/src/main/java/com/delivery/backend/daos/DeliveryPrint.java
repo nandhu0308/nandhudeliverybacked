@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @created May 3, 2017
  */
 @Entity
-@Table(name="dbo.DELIVERY_PRINT", catalog="NONCOMP")
+@Table(name="delivery_print", catalog="noncomp")
 public class DeliveryPrint {
 	@Id
 	@Column(name="DELIVERY_PRINT_NO")

@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * @created May 3, 2017
  */
 @Entity
-@Table(name="dbo.MST_STATUS", catalog="NONCOMP")
+@Table(name="mst_status", catalog="noncomp")
 public class MstStatus {
 	@Id
 	@Column(name="STATUS_CODE")

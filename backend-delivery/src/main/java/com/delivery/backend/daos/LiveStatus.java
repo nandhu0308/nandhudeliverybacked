@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @created May 3, 2017
  */
 @Entity
-@Table(name="dbo.LIVE_STATUS", catalog="NONCOMP")
+@Table(name="live_status", catalog="noncomp")
 public class LiveStatus {
 	@Id
 	@Column(name="LIVE_ID")
